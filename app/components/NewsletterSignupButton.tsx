@@ -23,7 +23,7 @@ export default function NewsletterSignupButton() {
     setState("loading");
     timeoutRef.current = setTimeout(() => {
       setState("done");
-    }, 3000);
+    }, 5000);
   };
 
   return (
@@ -35,7 +35,7 @@ export default function NewsletterSignupButton() {
     >
       {state === "loading" && <Loader />}
       {state === "idle" && "Sign up now"}
-      {state === "loading"}
+      {state === "loading" && ""}
       {state === "done" && "Thank you."}
     </button>
   );

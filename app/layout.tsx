@@ -20,6 +20,14 @@ const ppEditorialNewItalic = localFont({
   display: "swap",
 });
 
+const ftTogetherBold = localFont({
+  src: "../public/fonts/FTTogetherUnlicensedTrial-Bold.woff2",
+  variable: "--font-ft-together-bold",
+  weight: "700",
+  style: "normal",
+  display: "swap",
+});
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -38,7 +46,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${helveticaNeue.variable} ${ppEditorialNewItalic.variable} ${geistMono.variable} antialiased`}
+        className={`${helveticaNeue.variable} ${ppEditorialNewItalic.variable} ${ftTogetherBold.variable} ${geistMono.variable} antialiased`}
       >
         <SmoothScroll />
         {children}

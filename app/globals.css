@@ -11,6 +11,7 @@
   --font-sans: var(--font-helvetica-neue);
   --font-mono: var(--font-geist-mono);
   --font-display: var(--font-pp-editorial-new-italic);
+  --font-heading: var(--font-ft-together-bold);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -43,4 +44,8 @@ html.lenis body {
 .logo {
   font-family: var(--font-pp-editorial-new-italic), "PP Editorial New Italic", "Helvetica Neue", Helvetica, Arial, sans-serif;
   
+}
+
+.font-heading {
+  font-family: var(--font-ft-together-bold), "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

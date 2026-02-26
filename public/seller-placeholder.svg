@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" fill="none">
+  <rect width="800" height="1000" fill="#EAEAEA"/>
+  <rect x="56" y="56" width="688" height="888" stroke="#1A1A1A" stroke-opacity="0.16" stroke-width="2"/>
+  <circle cx="400" cy="360" r="120" fill="#D5D5D5"/>
+  <path d="M180 820C180 668.072 303.072 545 455 545H345C496.928 545 620 668.072 620 820V820H180V820Z" fill="#D0D0D0"/>
+  <text x="400" y="920" fill="#333333" font-family="Helvetica, Arial, sans-serif" font-size="34" text-anchor="middle">
+    Seller Image Placeholder
+  </text>
+</svg>
