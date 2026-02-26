@@ -1,10 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { Geist_Mono } from "next/font/google";
+import SmoothScroll from "./components/SmoothScroll";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const helveticaNeue = localFont({
+  src: "../public/fonts/HelveticaNeueMedium.woff2",
+  variable: "--font-helvetica-neue",
+  weight: "500",
+  style: "normal",
+  display: "swap",
+});
+
+const ppEditorialNewItalic = localFont({
+  src: "../public/fonts/66f7fc2a92d54c5a94804e33_PPEditorialNew-Italic.woff2",
+  variable: "--font-pp-editorial-new-italic",
+  weight: "400",
+  style: "italic",
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -25,8 +38,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${helveticaNeue.variable} ${ppEditorialNewItalic.variable} ${geistMono.variable} antialiased`}
       >
+        <SmoothScroll />
         {children}
       </body>
     </html>
