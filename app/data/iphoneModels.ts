@@ -1,0 +1,41 @@
+export type IphoneModel = {
+  id: string
+  model: string
+  storageOptions: string[]
+  condition: 'Pre-Owned' | 'Brand New'
+  price: string
+  ctaLabel: string
+}
+
+export const iphoneModels: IphoneModel[] = [
+  { id: 'iphone-x', model: 'Apple iPhone X', storageOptions: ['64GB'], condition: 'Pre-Owned', price: 'R3 500', ctaLabel: 'Configure' },
+  { id: 'iphone-xr', model: 'Apple iPhone XR', storageOptions: ['64GB'], condition: 'Pre-Owned', price: 'R3 800', ctaLabel: 'Configure' },
+  { id: 'iphone-xr-256', model: 'Apple iPhone XR', storageOptions: ['256GB'], condition: 'Pre-Owned', price: 'R4 000', ctaLabel: 'Configure' },
+  
+
+  { id: 'iphone-11', model: 'Apple iPhone 11', storageOptions: ['64GB'], condition: 'Pre-Owned', price: 'R4 500', ctaLabel: 'Configure' },
+  { id: 'iphone-11-128', model: 'Apple iPhone 11', storageOptions: ['128GB'], condition: 'Pre-Owned', price: 'R4 700', ctaLabel: 'Configure' },
+  { id: 'iphone-11-pro', model: 'Apple iPhone 11 Pro', storageOptions: ['64GB'], condition: 'Pre-Owned', price: 'R5 500', ctaLabel: 'Configure' },
+  { id: 'iphone-11-pro-max', model: 'Apple iPhone 11 Pro Max', storageOptions: ['256GB'], condition: 'Pre-Owned', price: 'R6 500', ctaLabel: 'Configure' },
+
+  { id: 'iphone-12', model: 'Apple iPhone 12', storageOptions: ['64GB'], condition: 'Pre-Owned', price: 'R5 400', ctaLabel: 'Configure' },
+  { id: 'iphone-12-128', model: 'Apple iPhone 12', storageOptions: ['128GB'], condition: 'Pre-Owned', price: 'R6 500', ctaLabel: 'Configure' },
+  { id: 'iphone-12-pro', model: 'Apple iPhone 12 Pro', storageOptions: ['128GB'], condition: 'Pre-Owned', price: 'R7 200', ctaLabel: 'Configure' },
+  { id: 'iphone-12-pro-max', model: 'Apple iPhone 12 Pro Max', storageOptions: ['128GB'], condition: 'Pre-Owned', price: 'R9 200', ctaLabel: 'Configure' },
+
+  { id: 'iphone-13', model: 'Apple iPhone 13', storageOptions: ['128GB'], condition: 'Pre-Owned', price: 'R7 100', ctaLabel: 'Configure' },
+  { id: 'iphone-13-pro', model: 'Apple iPhone 13 Pro', storageOptions: ['128GB'], condition: 'Pre-Owned', price: 'R9 300', ctaLabel: 'Configure' },
+  { id: 'iphone-13-pro-max', model: 'Apple iPhone 13 Pro Max', storageOptions: ['128GB'], condition: 'Pre-Owned', price: 'R10 100', ctaLabel: 'Configure' },
+
+  { id: 'iphone-14', model: 'Apple iPhone 14', storageOptions: ['128GB'], condition: 'Pre-Owned', price: 'R8 450', ctaLabel: 'Configure' },
+  { id: 'iphone-14-pro', model: 'Apple iPhone 14 Pro', storageOptions: ['128GB'], condition: 'Pre-Owned', price: 'R12 000', ctaLabel: 'Configure' },
+  { id: 'iphone-14-pro-max', model: 'Apple iPhone 14 Pro Max', storageOptions: ['128GB'], condition: 'Pre-Owned', price: 'R13 000', ctaLabel: 'Configure' },
+
+  { id: 'iphone-15', model: 'Apple iPhone 15', storageOptions: ['128GB'], condition: 'Brand New', price: 'R11 000', ctaLabel: 'Configure' },
+  { id: 'iphone-15-pro', model: 'Apple iPhone 15 Pro', storageOptions: ['128GB'], condition: 'Brand New', price: 'R14 400', ctaLabel: 'Configure' },
+  { id: 'iphone-15-pro-max', model: 'Apple iPhone 15 Pro Max', storageOptions: ['256GB'], condition: 'Brand New', price: 'R16 000', ctaLabel: 'Configure' },
+
+  { id: 'iphone-16', model: 'Apple iPhone 16', storageOptions: ['128GB'], condition: 'Brand New', price: 'R13 300', ctaLabel: 'Configure' },
+  { id: 'iphone-16-pro', model: 'Apple iPhone 16 Pro', storageOptions: ['128GB'], condition: 'Brand New', price: 'R17 500', ctaLabel: 'Configure' },
+  { id: 'iphone-16-pro-max', model: 'Apple iPhone 16 Pro Max', storageOptions: ['256GB'], condition: 'Brand New', price: 'R18 500', ctaLabel: 'Configure' },
+]

@@ -49,3 +49,7 @@ html.lenis body {
 .font-heading {
   font-family: var(--font-ft-together-bold), "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
+.price {
+  background: #0008ff;
+}
