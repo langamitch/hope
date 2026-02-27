@@ -69,6 +69,7 @@ export default function Home() {
   const [activeFooterInfo, setActiveFooterInfo] = useState<FooterInfoKey | null>(
     null
   );
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [activeOrderItem, setActiveOrderItem] = useState<IphoneModel | null>(
     null
@@ -170,39 +171,107 @@ export default function Home() {
   return (
     <div className="relative min-h-screen">
       {/*navbar */}
-      <div className="fixed top-0 z-20 flex w-full mix-blend-difference flex-row justify-between p-2 text-white">
-        <div className="flex  cursor-pointer gap-4 p-2">
-          <span onClick={() => window.open("./shop")}>Shop</span>
-          <span onClick={() => window.open("./archive", "_blank")}>
-            Archive
-          </span>
-          <span onClick={() => window.open("./accessories", "_blank")}>
-            Accessories
-          </span>
-        </div>
-        <div className="logo flex gap-4 p-2">
-          <span>Hope&apos;s iPhone Collection</span>
-        </div>
-        <div className="flex cursor-pointer gap-4 p-2">
-          <input
-            type="text"
-            placeholder="Search"
-            className="w-50 border-b bg-transparent px-1 text-white placeholder:text-white/70 outline-none"
-          />
+      <div className="fixed top-0 z-20 w-full text-white mix-blend-difference">
+        <div className="flex items-center justify-between p-2 md:hidden">
           <button
             type="button"
-            onClick={() => setIsWishlistOpen((previous) => !previous)}
-            className="cursor-pointer px-1 transition hover:bg-white hover:text-black"
+            onClick={() => setIsMobileMenuOpen((previous) => !previous)}
+            className="cursor-pointer px-2 py-1 text-[13px] uppercase transition hover:bg-white hover:text-black"
           >
-            Wishlist
+            {isMobileMenuOpen ? "Close" : "Menu"}
           </button>
-          <span className="border-2 border-white px-2 text-white">
-            {wishlistItemIds.length}
-          </span>
+          <div className="logo p-2 text-sm tracking-wide">HIC</div>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setIsWishlistOpen((previous) => !previous);
+                setIsMobileMenuOpen(false);
+              }}
+              className="cursor-pointer px-1 text-[13px] uppercase transition hover:bg-white hover:text-black"
+            >
+              Wishlist
+            </button>
+            <span className="border-2 border-white px-2 text-white">
+              {wishlistItemIds.length}
+            </span>
+          </div>
+        </div>
+        {isMobileMenuOpen && (
+          <div className="border-t border-white/20 px-2 pb-2 md:hidden">
+            <div className="flex flex-col gap-1 p-2 text-[13px] uppercase">
+              <button
+                type="button"
+                onClick={() => {
+                  window.open("./shop");
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-fit cursor-pointer px-1 text-left hover:bg-white hover:text-black"
+              >
+                Shop
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  window.open("./archive", "_blank");
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-fit cursor-pointer px-1 text-left hover:bg-white hover:text-black"
+              >
+                Archive
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  window.open("./accessories", "_blank");
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-fit cursor-pointer px-1 text-left hover:bg-white hover:text-black"
+              >
+                Accessories
+              </button>
+            </div>
+            <input
+              type="text"
+              placeholder="Search"
+              className="w-full border-b bg-transparent px-1 pb-1 text-white placeholder:text-white/70 outline-none"
+            />
+          </div>
+        )}
+        <div className="hidden md:flex w-full flex-row justify-between p-2">
+          <div className="flex cursor-pointer gap-4 p-2">
+            <span onClick={() => window.open("./shop")}>Shop</span>
+            <span onClick={() => window.open("./archive", "_blank")}>
+              Archive
+            </span>
+            <span onClick={() => window.open("./accessories", "_blank")}>
+              Accessories
+            </span>
+          </div>
+          <div className="logo flex gap-4 p-2">
+            <span>Hope&apos;s iPhone Collection</span>
+          </div>
+          <div className="flex cursor-pointer gap-4 p-2">
+            <input
+              type="text"
+              placeholder="Search"
+              className="w-50 border-b bg-transparent px-1 text-white placeholder:text-white/70 outline-none"
+            />
+            <button
+              type="button"
+              onClick={() => setIsWishlistOpen((previous) => !previous)}
+              className="cursor-pointer px-1 transition hover:bg-white hover:text-black"
+            >
+              Wishlist
+            </button>
+            <span className="border-2 border-white px-2 text-white">
+              {wishlistItemIds.length}
+            </span>
+          </div>
         </div>
       </div>
       {isWishlistOpen && (
-        <div className="fixed top-0 right-0 z-30 w-[380px] border min-h-50 border-black/15 bg-white p-4 text-black shadow-[0_4000px_5000px_rgba(0,0,0,0.12)]">
+        <div className="fixed top-16 right-2 left-2 z-30 max-h-[80vh] overflow-y-auto border border-black/15 bg-white p-4 text-black shadow-[0_4000px_5000px_rgba(0,0,0,0.12)] md:top-0 md:right-0 md:left-auto md:min-h-50 md:w-[380px]">
           <div className="flex items-center justify-between text-[13px] uppercase">
             <span>Wishlist</span>
             <button

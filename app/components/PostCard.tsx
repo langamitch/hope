@@ -101,7 +101,7 @@ const PostCard = ({
 
         <div className="flex w-full mt-1 justify-between uppercase">
           <span className="price px-0.5 text-white">{price}</span>
-          <span className="price px-0.5 text-white">{ctaLabel}</span>
+         {/**  <span className="price px-0.5 text-white">{ctaLabel}</span>*/}
         </div>
       </div>
     </div>
