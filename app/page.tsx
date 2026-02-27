@@ -3,7 +3,9 @@
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { gsap } from "gsap";
-import NewsletterSignupButton from "./components/NewsletterSignupButton";
+import NewsletterSignupButton, {
+  type NewsletterSignupState,
+} from "./components/NewsletterSignupButton";
 import Grid from "./components/Grid";
 import DualRingLoader from "./components/DualRingLoader";
 import { iphoneModels, type IphoneModel } from "./data/iphoneModels";
@@ -65,6 +67,9 @@ const getWhatsappQrUrl = (item: IphoneModel) =>
     getWhatsappUrl(item)
   )}`;
 
+const isValidEmail = (value: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
 export default function Home() {
   const youtubeVideoId = "Gg_ncsRWboo";
   const [useInteractiveHeroVideo, setUseInteractiveHeroVideo] = useState(false);
@@ -74,6 +79,10 @@ export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterState, setNewsletterState] =
+    useState<NewsletterSignupState>("idle");
+  const [newsletterFeedback, setNewsletterFeedback] = useState("");
   const [activeOrderItem, setActiveOrderItem] = useState<IphoneModel | null>(
     null
   );
@@ -233,6 +242,54 @@ export default function Home() {
     );
   };
 
+  const handleNewsletterSignup = async () => {
+    const email = newsletterEmail.trim().toLowerCase();
+
+    if (!isValidEmail(email)) {
+      setNewsletterState("error");
+      setNewsletterFeedback("Please enter a valid email address.");
+      return;
+    }
+
+    setNewsletterState("loading");
+    setNewsletterFeedback("");
+
+    try {
+      const response = await fetch("/api/newsletter-signups", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          source: "footer",
+        }),
+      });
+
+      const payload = (await response.json().catch(() => null)) as
+        | { error?: string; alreadySubscribed?: boolean }
+        | null;
+
+      if (!response.ok) {
+        setNewsletterState("error");
+        setNewsletterFeedback(payload?.error ?? "Could not sign you up right now.");
+        return;
+      }
+
+      setNewsletterState("done");
+      setNewsletterFeedback(
+        payload?.alreadySubscribed
+          ? "You are already subscribed."
+          : "Thanks you."
+      );
+      setNewsletterEmail("");
+    } catch (error) {
+      console.error("Newsletter signup failed", error);
+      setNewsletterState("error");
+      setNewsletterFeedback("Network error. Please try again.");
+    }
+  };
+
   return (
     <div className="relative min-h-fit">
       {/*navbar */}
@@ -308,14 +365,14 @@ export default function Home() {
             CLOSE
           </button>
         </div>
-        <div className="mt-5 uppercase font-semibold mono flex flex-col gap-3 text-base uppercase">
+        <div className="mt-5 uppercase font-semibold mono flex flex-col gap-3 text-base">
           <button
             type="button"
             onClick={() => {
               window.open("./shop");
               setIsMobileMenuOpen(false);
             }}
-            className="w-fit  cursor-pointer px-1 text-left hover:bg-white hover:text-black"
+            className="w-fit  uppercase mono font-medium cursor-pointer px-1 text-left hover:bg-white hover:text-black"
           >
             Shop
           </button>
@@ -325,7 +382,7 @@ export default function Home() {
               window.open("./archive", "_blank");
               setIsMobileMenuOpen(false);
             }}
-            className="w-fit cursor-pointer px-1 text-left hover:bg-white hover:text-black"
+            className="w-fit uppercase mono font-medium cursor-pointer px-1 text-left hover:bg-white hover:text-black"
           >
             Archive
           </button>
@@ -335,7 +392,7 @@ export default function Home() {
               window.open("./accessories", "_blank");
               setIsMobileMenuOpen(false);
             }}
-            className="w-fit cursor-pointer px-1 text-left hover:bg-white hover:text-black"
+            className="w-fit uppercase mono font-medium cursor-pointer px-1 text-left hover:bg-white hover:text-black"
           >
             Accessories
           </button>
@@ -625,13 +682,34 @@ export default function Home() {
             <input
               type="email"
               placeholder="Enter your email"
+              value={newsletterEmail}
+              onChange={(event) => {
+                setNewsletterEmail(event.target.value);
+                if (newsletterState !== "idle") {
+                  setNewsletterState("idle");
+                  setNewsletterFeedback("");
+                }
+              }}
               className="w-full border-b mt-5 uppercase bg-transparent px-0 text-black placeholder:text-black/70 outline-none"
             />
             <span className="text-[13px]">
               Subscribe to receice monthly updates on new devices and exclusive
               offers.
             </span>
-            <NewsletterSignupButton />
+            {newsletterFeedback && (
+              <span
+                className={`text-[12px] ${
+                  newsletterState === "error" ? "text-red-600" : "text-black/70"
+                }`}
+              >
+                {newsletterFeedback}
+              </span>
+            )}
+            <NewsletterSignupButton
+              state={newsletterState}
+              onClick={handleNewsletterSignup}
+              disabled={newsletterEmail.trim().length === 0}
+            />
           </div>
           {/** 
           <div className='col-span-12 flex flex-col gap-2 py-4 text-[13px] md:col-span-3'>
