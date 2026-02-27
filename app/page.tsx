@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { gsap } from "gsap";
 import NewsletterSignupButton from "./components/NewsletterSignupButton";
 import Grid from "./components/Grid";
 import DualRingLoader from "./components/DualRingLoader";
@@ -71,6 +72,7 @@ export default function Home() {
   );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement | null>(null);
   const [activeOrderItem, setActiveOrderItem] = useState<IphoneModel | null>(
     null
   );
@@ -105,6 +107,58 @@ export default function Home() {
   useEffect(() => {
     localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(wishlistItemIds));
   }, [wishlistItemIds]);
+
+  useEffect(() => {
+    const mobileMenu = mobileMenuRef.current;
+
+    if (!mobileMenu) {
+      return;
+    }
+
+    gsap.set(mobileMenu, {
+      xPercent: -100,
+      autoAlpha: 1,
+      display: "none",
+      pointerEvents: "none",
+    });
+  }, []);
+
+  useEffect(() => {
+    const mobileMenu = mobileMenuRef.current;
+
+    if (!mobileMenu) {
+      return;
+    }
+
+    gsap.killTweensOf(mobileMenu);
+
+    if (isMobileMenuOpen) {
+      gsap.set(mobileMenu, {
+        display: "block",
+        pointerEvents: "auto",
+      });
+
+      gsap.to(mobileMenu, {
+        xPercent: 0,
+        duration: 0.55,
+        ease: "power3.out",
+      });
+
+      return;
+    }
+
+    gsap.to(mobileMenu, {
+      xPercent: -100,
+      duration: 0.45,
+      ease: "power3.in",
+      onComplete: () => {
+        gsap.set(mobileMenu, {
+          display: "none",
+          pointerEvents: "none",
+        });
+      },
+    });
+  }, [isMobileMenuOpen]);
 
   useEffect(() => {
     setIsQrLoading(Boolean(activeOrderItem));
@@ -171,7 +225,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen">
       {/*navbar */}
-      <div className="fixed top-0 z-20 w-full text-white mix-blend-difference">
+      <div className="fixed top-0 z-20 w-full text-white md:mix-blend-difference">
         <div className="flex items-center justify-between p-2 md:hidden">
           <button
             type="button"
@@ -197,47 +251,6 @@ export default function Home() {
             </span>
           </div>
         </div>
-        {isMobileMenuOpen && (
-          <div className="border-t border-white/20 px-2 pb-2 md:hidden">
-            <div className="flex flex-col gap-1 p-2 text-[13px] uppercase">
-              <button
-                type="button"
-                onClick={() => {
-                  window.open("./shop");
-                  setIsMobileMenuOpen(false);
-                }}
-                className="w-fit cursor-pointer px-1 text-left hover:bg-white hover:text-black"
-              >
-                Shop
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  window.open("./archive", "_blank");
-                  setIsMobileMenuOpen(false);
-                }}
-                className="w-fit cursor-pointer px-1 text-left hover:bg-white hover:text-black"
-              >
-                Archive
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  window.open("./accessories", "_blank");
-                  setIsMobileMenuOpen(false);
-                }}
-                className="w-fit cursor-pointer px-1 text-left hover:bg-white hover:text-black"
-              >
-                Accessories
-              </button>
-            </div>
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full border-b bg-transparent px-1 pb-1 text-white placeholder:text-white/70 outline-none"
-            />
-          </div>
-        )}
         <div className="hidden md:flex w-full flex-row justify-between p-2">
           <div className="flex cursor-pointer gap-4 p-2">
             <span onClick={() => window.open("./shop")}>Shop</span>
@@ -268,6 +281,60 @@ export default function Home() {
               {wishlistItemIds.length}
             </span>
           </div>
+        </div>
+      </div>
+      <div
+        ref={mobileMenuRef}
+        className="fixed inset-0 z-50 bg-black px-4 pt-4 text-white md:hidden"
+      >
+        <div className="flex items-center justify-between border-b border-white/20 pb-3">
+          <span className="logo text-sm tracking-wide">HIC</span>
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="cursor-pointer px-2 py-1 text-[13px] uppercase transition hover:bg-white hover:text-black"
+          >
+            Close
+          </button>
+        </div>
+        <div className="mt-5 flex flex-col gap-3 text-base uppercase">
+          <button
+            type="button"
+            onClick={() => {
+              window.open("./shop");
+              setIsMobileMenuOpen(false);
+            }}
+            className="w-fit cursor-pointer px-1 text-left hover:bg-white hover:text-black"
+          >
+            Shop
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              window.open("./archive", "_blank");
+              setIsMobileMenuOpen(false);
+            }}
+            className="w-fit cursor-pointer px-1 text-left hover:bg-white hover:text-black"
+          >
+            Archive
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              window.open("./accessories", "_blank");
+              setIsMobileMenuOpen(false);
+            }}
+            className="w-fit cursor-pointer px-1 text-left hover:bg-white hover:text-black"
+          >
+            Accessories
+          </button>
+        </div>
+        <div className="mt-8">
+          <input
+            type="text"
+            placeholder="Search"
+            className="w-full border-b bg-transparent px-1 pb-2 text-white placeholder:text-white/70 outline-none"
+          />
         </div>
       </div>
       {isWishlistOpen && (

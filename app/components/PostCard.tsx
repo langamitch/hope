@@ -58,7 +58,7 @@ const PostCard = ({
               : `Add ${model} to wishlist`
           }
           onClick={onToggleWishlist}
-          className={`absolute top-0 right-0 z-10 p-2 cursor-pointer w-fit ${
+          className={`absolute top-0 mix-blend-difference text-white right-0 z-10 p-2 cursor-pointer w-fit ${
             isWishlisted
               ? "bg-black text-white"
               : "hover:bg-black hover:text-white"
