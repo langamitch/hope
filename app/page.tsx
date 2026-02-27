@@ -116,7 +116,7 @@ export default function Home() {
     }
 
     gsap.set(mobileMenu, {
-      xPercent: -100,
+      yPercent: -100,
       autoAlpha: 1,
       display: "none",
       pointerEvents: "none",
@@ -139,7 +139,7 @@ export default function Home() {
       });
 
       gsap.to(mobileMenu, {
-        xPercent: 0,
+        yPercent: 0,
         duration: 0.55,
         ease: "power3.out",
       });
@@ -148,7 +148,7 @@ export default function Home() {
     }
 
     gsap.to(mobileMenu, {
-      xPercent: -100,
+      yPercent: -100,
       duration: 0.45,
       ease: "power3.in",
       onComplete: () => {
@@ -223,18 +223,18 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-fit">
       {/*navbar */}
-      <div className="fixed top-0 z-20 w-full text-white md:mix-blend-difference">
+      <div className="fixed top-0 z-20 w-full text-white mix-blend-difference">
         <div className="flex items-center justify-between p-2 md:hidden">
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen((previous) => !previous)}
-            className="cursor-pointer px-2 py-1 text-[13px] uppercase transition hover:bg-white hover:text-black"
+            className="cursor-pointer px-2 py-1 text-[13px] text-white uppercase transition hover:bg-white hover:text-black"
           >
             {isMobileMenuOpen ? "Close" : "Menu"}
           </button>
-          <div className="logo p-2 text-sm tracking-wide">HIC</div>
+          <div className="logo p-2 text-sm mix-blend-difference tracking-wide">HIC</div>
           <div className="flex items-center gap-2">
             <button
               type="button"
@@ -251,7 +251,7 @@ export default function Home() {
             </span>
           </div>
         </div>
-        <div className="hidden md:flex w-full flex-row justify-between p-2">
+        <div className="hidden w-full flex-row justify-between p-2 md:flex">
           <div className="flex cursor-pointer gap-4 p-2">
             <span onClick={() => window.open("./shop")}>Shop</span>
             <span onClick={() => window.open("./archive", "_blank")}>
@@ -285,16 +285,16 @@ export default function Home() {
       </div>
       <div
         ref={mobileMenuRef}
-        className="fixed inset-0 z-50 bg-black px-4 pt-4 text-white md:hidden"
+        className="fixed top-0 right-0 left-0 z-50 bg-black px-4 pt-4 pb-6 text-white mix-blend-normal md:hidden"
       >
-        <div className="flex items-center justify-between border-b border-white/20 pb-3">
-          <span className="logo text-sm tracking-wide">HIC</span>
+        <div className="relative flex items-center justify-center pb-3">
+          
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="cursor-pointer px-2 py-1 text-[13px] uppercase transition hover:bg-white hover:text-black"
+            className="cursor-pointer mono px-2 py-1 text-[13px] uppercase transition hover:bg-white hover:text-black"
           >
-            Close
+            CLOSE
           </button>
         </div>
         <div className="mt-5 flex flex-col gap-3 text-base uppercase">
@@ -459,7 +459,7 @@ export default function Home() {
       )}
 
       {/*hero */}
-      <section className="relative h-screen overflow-hidden">
+      <section className="relative h-[80vh] overflow-hidden">
         <div className="absolute inset-0">
           <iframe
             className="pointer-events-none absolute top-1/2 left-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2"
