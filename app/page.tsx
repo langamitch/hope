@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { gsap } from "gsap";
 import NewsletterSignupButton, {
   type NewsletterSignupState,
 } from "./components/NewsletterSignupButton";
 import Grid from "./components/Grid";
 import DualRingLoader from "./components/DualRingLoader";
+import SiteIntro from "./components/SiteIntro";
 import { iphoneModels, type IphoneModel } from "./data/iphoneModels";
 
 const WISHLIST_STORAGE_KEY = "hope:wishlist:item-ids";
@@ -72,6 +73,7 @@ const isValidEmail = (value: string) =>
 
 export default function Home() {
   const youtubeVideoId = "Gg_ncsRWboo";
+  const [showIntro, setShowIntro] = useState(true);
   const [useInteractiveHeroVideo, setUseInteractiveHeroVideo] = useState(false);
   const [activeFooterInfo, setActiveFooterInfo] = useState<FooterInfoKey | null>(
     null
@@ -117,6 +119,10 @@ export default function Home() {
   useEffect(() => {
     localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(wishlistItemIds));
   }, [wishlistItemIds]);
+
+  const handleIntroDone = useCallback(() => {
+    setShowIntro(false);
+  }, []);
 
   useEffect(() => {
     const mobileMenu = mobileMenuRef.current;
@@ -292,6 +298,7 @@ export default function Home() {
 
   return (
     <div className="relative min-h-fit">
+      {showIntro && <SiteIntro onDone={handleIntroDone} />}
       {/*navbar */}
       <div className="fixed top-0 z-20 w-full text-white mix-blend-difference">
         <div className="flex items-center justify-between p-2 md:hidden">
@@ -419,7 +426,12 @@ export default function Home() {
           </div>
           <div className="mt-4 text-[13px]">
             {wishlistItems.length === 0 ? (
-              <p className='justify-center bg-[#f3f3f3] p-1'>Nothing here yet!</p>
+              <div className='flex flex-col gap-1'>
+              <p className='justify-center  w-fit mt-2 p-1'>Nothing here yet! Browse to see more</p>
+              <span 
+              onClick={() => window.open("./shop")}
+              className='mono price px-1 mx-1 text-white cursor pointer mt-4 w-fit' >Shop</span>
+              </div>
             ) : (
               <ul className="mt-10 space-y-2">
                 {wishlistItems.map((item) => (
