@@ -67,6 +67,7 @@ const getWhatsappQrUrl = (item: IphoneModel) =>
 
 export default function Home() {
   const youtubeVideoId = "Gg_ncsRWboo";
+  const [useInteractiveHeroVideo, setUseInteractiveHeroVideo] = useState(false);
   const [activeFooterInfo, setActiveFooterInfo] = useState<FooterInfoKey | null>(
     null
   );
@@ -163,6 +164,16 @@ export default function Home() {
   useEffect(() => {
     setIsQrLoading(Boolean(activeOrderItem));
   }, [activeOrderItem]);
+
+  useEffect(() => {
+    const ua = navigator.userAgent || "";
+    const isIOS =
+      /iPad|iPhone|iPod/.test(ua) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+
+    setUseInteractiveHeroVideo(isIOS || isTouch);
+  }, []);
 
   const wishlistItems = useMemo<IphoneModel[]>(
     () =>
@@ -273,7 +284,7 @@ export default function Home() {
             <button
               type="button"
               onClick={() => setIsWishlistOpen((previous) => !previous)}
-              className="cursor-pointer px-1 transition hover:bg-white hover:text-black"
+              className="cursor-pointer  px-1 transition hover:bg-white hover:text-black"
             >
               Wishlist
             </button>
@@ -285,26 +296,26 @@ export default function Home() {
       </div>
       <div
         ref={mobileMenuRef}
-        className="fixed top-0 right-0 left-0 z-50 bg-black px-4 pt-4 pb-6 text-white mix-blend-normal md:hidden"
+        className="fixed top-0 right-0 left-0 z-50 price px-4 pt-4 pb-6 text-white/90 mix-blend-normal md:hidden"
       >
         <div className="relative flex items-center justify-center pb-3">
           
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="cursor-pointer mono px-2 py-1 text-[13px] uppercase transition hover:bg-white hover:text-black"
+            className="cursor-pointer mono font-semibold px-2 py-1 text-[13px] uppercase transition hover:bg-white hover:text-black"
           >
             CLOSE
           </button>
         </div>
-        <div className="mt-5 flex flex-col gap-3 text-base uppercase">
+        <div className="mt-5 uppercase font-semibold mono flex flex-col gap-3 text-base uppercase">
           <button
             type="button"
             onClick={() => {
               window.open("./shop");
               setIsMobileMenuOpen(false);
             }}
-            className="w-fit cursor-pointer px-1 text-left hover:bg-white hover:text-black"
+            className="w-fit  cursor-pointer px-1 text-left hover:bg-white hover:text-black"
           >
             Shop
           </button>
@@ -333,7 +344,7 @@ export default function Home() {
           <input
             type="text"
             placeholder="Search"
-            className="w-full border-b bg-transparent px-1 pb-2 text-white placeholder:text-white/70 outline-none"
+            className="w-full border-b mono bg-transparent px-1 pb-2 text-white/90 placeholder:text-white/50 outline-none"
           />
         </div>
       </div>
@@ -462,11 +473,16 @@ export default function Home() {
       <section className="relative h-[80vh] overflow-hidden">
         <div className="absolute inset-0">
           <iframe
-            className="pointer-events-none absolute top-1/2 left-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2"
-            src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${youtubeVideoId}&modestbranding=1&rel=0&playsinline=1`}
+            className={`absolute top-1/2 left-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2 ${
+              useInteractiveHeroVideo ? "pointer-events-auto" : "pointer-events-none"
+            }`}
+            src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&mute=1&controls=${
+              useInteractiveHeroVideo ? 1 : 0
+            }&loop=1&playlist=${youtubeVideoId}&modestbranding=1&rel=0&playsinline=1&enablejsapi=1`}
             title="Hero background video"
-            allow="autoplay; fullscreen; picture-in-picture"
+            allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
             referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/35" />
