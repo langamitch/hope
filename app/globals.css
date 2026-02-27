@@ -50,6 +50,37 @@ html.lenis body {
   font-family: var(--font-ft-together-bold), "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.mono {
+  font-family: var(--font-geist-mono), "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 .price {
   background: #0008ff;
 }
+
+@keyframes loader-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.loader-ring {
+  animation: loader-spin 1s linear infinite;
+}
+
+.loader-ring-reverse {
+  animation: loader-spin-reverse 0.85s linear infinite;
+}
+

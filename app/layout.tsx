@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Geist_Mono } from "next/font/google";
 import SmoothScroll from "./components/SmoothScroll";
+import GoogleAnalytics from "./components/GoogleAnalytics";
 import "./globals.css";
 
 const helveticaNeue = localFont({
@@ -34,7 +35,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "HIC - Hope's iPhone Collection",
+  title: "HM Collection",
   description: "Online iPhone store by Hope",
 };
 
@@ -50,6 +51,7 @@ export default function RootLayout({
       >
         <SmoothScroll />
         {children}
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
       </body>
     </html>
   );
