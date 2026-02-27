@@ -9,7 +9,7 @@ type GridProps = {
 
 const Grid = ({ wishlistItemIds, onToggleWishlist }: GridProps) => {
   return (
-    <div className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+    <div className="grid w-full gap-2 grid-cols-2 md:grid-cols-4 lg:grid-cols-6 md:gap-4">
       {iphoneModels.map((phone) => (
         <PostCard
           key={phone.id}

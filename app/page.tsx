@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { gsap } from "gsap";
 import NewsletterSignupButton, {
@@ -72,6 +73,7 @@ const isValidEmail = (value: string) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
 export default function Home() {
+  const router = useRouter();
   const youtubeVideoId = "Gg_ncsRWboo";
   const [showIntro, setShowIntro] = useState(true);
   const [useInteractiveHeroVideo, setUseInteractiveHeroVideo] = useState(false);
@@ -206,6 +208,15 @@ export default function Home() {
     );
   };
 
+  const navigateTo = useCallback(
+    (path: string) => {
+      setIsMobileMenuOpen(false);
+      setIsWishlistOpen(false);
+      router.push(path);
+    },
+    [router]
+  );
+
   const logWishlistInquiry = async (item: IphoneModel) => {
     try {
       await fetch("/api/wishlist-inquiries", {
@@ -319,7 +330,7 @@ export default function Home() {
               }}
               className="cursor-pointer px-1 text-[13px] uppercase transition hover:bg-white hover:text-black"
             >
-              Wishlist
+              Cart
             </button>
             <span className="border-2 border-white px-2 text-white">
               {wishlistItemIds.length}
@@ -328,11 +339,11 @@ export default function Home() {
         </div>
         <div className="hidden w-full flex-row justify-between p-2 md:flex">
           <div className="flex cursor-pointer gap-4 p-2">
-            <span onClick={() => window.open("./shop")}>Shop</span>
-            <span onClick={() => window.open("./archive", "_blank")}>
+            <span onClick={() => navigateTo("/shop")}>Shop</span>
+            <span onClick={() => navigateTo("/archive")}>
               Archive
             </span>
-            <span onClick={() => window.open("./accessories", "_blank")}>
+            <span onClick={() => navigateTo("/accessories")}>
               Accessories
             </span>
           </div>
@@ -350,7 +361,7 @@ export default function Home() {
               onClick={() => setIsWishlistOpen((previous) => !previous)}
               className="cursor-pointer  px-1 transition hover:bg-white hover:text-black"
             >
-              Wishlist
+              Cart
             </button>
             <span className="border-2 border-white px-2 text-white">
               {wishlistItemIds.length}
@@ -376,8 +387,7 @@ export default function Home() {
           <button
             type="button"
             onClick={() => {
-              window.open("./shop");
-              setIsMobileMenuOpen(false);
+              navigateTo("/shop");
             }}
             className="w-fit  uppercase mono font-medium cursor-pointer px-1 text-left hover:bg-white hover:text-black"
           >
@@ -386,8 +396,7 @@ export default function Home() {
           <button
             type="button"
             onClick={() => {
-              window.open("./archive", "_blank");
-              setIsMobileMenuOpen(false);
+              navigateTo("/archive");
             }}
             className="w-fit uppercase mono font-medium cursor-pointer px-1 text-left hover:bg-white hover:text-black"
           >
@@ -396,8 +405,7 @@ export default function Home() {
           <button
             type="button"
             onClick={() => {
-              window.open("./accessories", "_blank");
-              setIsMobileMenuOpen(false);
+              navigateTo("/accessories");
             }}
             className="w-fit uppercase mono font-medium cursor-pointer px-1 text-left hover:bg-white hover:text-black"
           >
@@ -415,7 +423,7 @@ export default function Home() {
       {isWishlistOpen && (
         <div className="fixed top-16 right-2 left-2 z-30 max-h-[80vh] overflow-y-auto border border-black/15 bg-white p-4 text-black shadow-[0_4000px_5000px_rgba(0,0,0,0.12)] md:top-0 md:right-0 md:left-auto md:min-h-50 md:w-[380px]">
           <div className="flex items-center justify-between text-[13px] uppercase">
-            <span>Wishlist</span>
+            <span>Cart</span>
             <button
               type="button"
               onClick={() => setIsWishlistOpen(false)}
@@ -429,7 +437,7 @@ export default function Home() {
               <div className='flex flex-col gap-1'>
               <p className='justify-center  w-fit mt-2 p-1'>Nothing here yet! Browse to see more</p>
               <span 
-              onClick={() => window.open("./shop")}
+              onClick={() => navigateTo("/shop")}
               className='mono price px-1 mx-1 text-white cursor pointer mt-4 w-fit' >Shop</span>
               </div>
             ) : (

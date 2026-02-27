@@ -20,7 +20,10 @@ export async function POST(request: Request) {
   try {
     payload = await request.json();
   } catch {
-    return NextResponse.json({ error: "Invalid JSON payload." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Invalid JSON payload." },
+      { status: 400 },
+    );
   }
 
   if (!hasText(payload.email)) {
@@ -30,13 +33,16 @@ export async function POST(request: Request) {
   const email = payload.email.trim().toLowerCase();
 
   if (!isValidEmail(email)) {
-    return NextResponse.json({ error: "Please provide a valid email." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Please provide a valid email." },
+      { status: 400 },
+    );
   }
 
   if (!hasText(SUPABASE_URL) || !hasText(SUPABASE_SERVICE_ROLE_KEY)) {
     return NextResponse.json(
-      { error: "Supabase environment variables are not configured." },
-      { status: 500 }
+      { error: "Supabase environment variables are not Add to cartd." },
+      { status: 500 },
     );
   }
 
@@ -70,13 +76,13 @@ export async function POST(request: Request) {
       const details = await response.text();
       return NextResponse.json(
         { error: "Failed to save newsletter signup.", details },
-        { status: response.status }
+        { status: response.status },
       );
     }
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to connect to Supabase.", details: String(error) },
-      { status: 500 }
+      { status: 500 },
     );
   }
 

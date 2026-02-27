@@ -21,7 +21,10 @@ export async function POST(request: Request) {
   try {
     payload = await request.json();
   } catch {
-    return NextResponse.json({ error: "Invalid JSON payload." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Invalid JSON payload." },
+      { status: 400 },
+    );
   }
 
   const { itemId, model, storage, price, message, whatsappUrl } = payload;
@@ -36,7 +39,7 @@ export async function POST(request: Request) {
   ) {
     return NextResponse.json(
       { error: "Missing required inquiry fields." },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -44,7 +47,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       ok: true,
       logged: false,
-      reason: "Supabase environment variables are not configured.",
+      reason: "Supabase environment variables are not Add to cartd.",
     });
   }
 
@@ -77,13 +80,13 @@ export async function POST(request: Request) {
       const details = await response.text();
       return NextResponse.json(
         { error: "Failed to save wishlist inquiry.", details },
-        { status: response.status }
+        { status: response.status },
       );
     }
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to connect to Supabase.", details: String(error) },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
