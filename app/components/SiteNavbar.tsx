@@ -128,7 +128,7 @@ export default function SiteNavbar() {
           >
             {isMobileMenuOpen ? "Close" : "Menu"}
           </button>
-          <div className="mono p-2 text-[13px] mix-blend-difference uppercase hover:price hover:text-white">
+          <div className="mono p-2 text-sm tracking-tight font-medium mix-blend-difference uppercase hover:price hover:text-white">
             HOPE'S IPHONES
           </div>
           <div className="flex items-center gap-2">
@@ -137,7 +137,7 @@ export default function SiteNavbar() {
               onClick={() => navigateTo("/")}
               className="cursor-pointer px-1 text-[13px] uppercase transition hover:bg-white hover:text-black"
             >
-              Wishlist
+              CART
             </button>
             <span className="border-2 border-white px-2 text-white">
               {wishlistCount}

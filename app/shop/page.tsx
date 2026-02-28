@@ -76,9 +76,10 @@ export default function ShopPage() {
   };
 
   return (
-    <main className="min-h-screen bg-white px-4 pb-10 pt-18 text-black">
+    <main className="min-h-screen bg-whitepb-10 pt-18 text-black">
       <SiteNavbar />
       {showIntro && <PageEntryIntro label="Shop" onDone={handleIntroDone} />}
+      <div className='flex flex-col p-4'>
       <section className="mb-4 mt-2 flex flex-col max-w-75 gap-2 text-[13px]">
         <p className="mono  text-black/70">
           Browse our tested iPhone range and  open any device card to view full
@@ -98,7 +99,7 @@ export default function ShopPage() {
             {cartNotice}
           </p>
         </div>
-      )}
+      )}</div>
     </main>
   );
 }
