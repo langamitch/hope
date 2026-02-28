@@ -421,7 +421,7 @@ export default function Home() {
         </div>
       </div>
       {isWishlistOpen && (
-        <div className="fixed top-16 right-2 left-2 z-30 max-h-[80vh] overflow-y-auto border border-black/15 bg-white p-4 text-black shadow-[0_4000px_5000px_rgba(0,0,0,0.12)] md:top-0 md:right-0 md:left-auto md:min-h-50 md:w-[380px]">
+        <div className="fixed top-16 right-2 left-2 z-30 max-h-[85vh] overflow-y-auto border border-black/15 bg-white p-4 text-black shadow-[0_4000px_5000px_rgba(0,0,0,0.12)] md:top-0 md:right-0 md:left-auto md:min-h-50 md:w-[380px]">
           <div className="flex items-center justify-between text-[13px] uppercase">
             <span>Cart</span>
             <button

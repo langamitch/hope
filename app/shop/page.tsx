@@ -57,9 +57,9 @@ export default function ShopPage() {
     <main className="min-h-screen bg-white px-4 pb-10 pt-18 text-black">
       <SiteNavbar />
       {showIntro && <PageEntryIntro label="Shop" onDone={handleIntroDone} />}
-      <section className="mb-4 mt-2 flex flex-col gap-2 text-[13px]">
-        <p className="mono text-black/70">
-          Browse our tested iPhone range and open any device card to view full
+      <section className="mb-4 mt-2 flex flex-col max-w-75 gap-2 text-[13px]">
+        <p className="mono  text-black/70">
+          Browse our tested iPhone range and  open any device card to view full
           details before ordering.
         </p>
         <p className="price w-fit px-2 py-1 text-white">
