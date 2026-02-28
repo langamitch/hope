@@ -10,6 +10,7 @@ const WISHLIST_STORAGE_KEY = "hope:wishlist:item-ids";
 
 export default function ShopPage() {
   const [showIntro, setShowIntro] = useState(true);
+  const [cartNotice, setCartNotice] = useState("");
   const [wishlistItemIds, setWishlistItemIds] = useState<string[]>(() => {
     if (typeof window === "undefined") {
       return [];
@@ -45,13 +46,34 @@ export default function ShopPage() {
     window.dispatchEvent(new Event("wishlist-updated"));
   }, [wishlistItemIds]);
 
-  const handleToggleWishlist = useCallback((itemId: string) => {
+  useEffect(() => {
+    if (!cartNotice) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setCartNotice("");
+    }, 1800);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [cartNotice]);
+
+  const handleToggleWishlist = (itemId: string) => {
+    const item = iphoneModels.find((phone) => phone.id === itemId);
+    const itemName = item?.model.replace(/^Apple\s+/i, "") ?? "Item";
+    const isRemoving = wishlistItemIds.includes(itemId);
+
     setWishlistItemIds((currentItems) =>
-      currentItems.includes(itemId)
+      isRemoving
         ? currentItems.filter((existingId) => existingId !== itemId)
         : [...currentItems, itemId]
     );
-  }, []);
+    setCartNotice(
+      `${itemName} ${isRemoving ? "removed from cart" : "added to cart"}`
+    );
+  };
 
   return (
     <main className="min-h-screen bg-white px-4 pb-10 pt-18 text-black">
@@ -70,6 +92,13 @@ export default function ShopPage() {
         wishlistItemIds={wishlistItemIds}
         onToggleWishlist={handleToggleWishlist}
       />
+      {cartNotice && (
+        <div className="pointer-events-none fixed inset-x-0 bottom-4 z-[70] flex justify-center">
+          <p className="price rounded-sm px-3 py-1.5 text-[12px] text-white shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
+            {cartNotice}
+          </p>
+        </div>
+      )}
     </main>
   );
 }
