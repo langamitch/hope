@@ -148,6 +148,14 @@ export default function SiteNavbar() {
           <div className="flex gap-4 p-2">
             <button
               type="button"
+              onClick={() => navigateTo("/")}
+              data-label="Shop"
+              className="nav-mask-link cursor-pointer"
+            >
+              <span>Home</span>
+            </button>
+            <button
+              type="button"
               onClick={() => navigateTo("/shop")}
               data-label="Shop"
               className="nav-mask-link cursor-pointer"
