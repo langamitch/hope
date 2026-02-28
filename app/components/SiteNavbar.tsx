@@ -128,8 +128,8 @@ export default function SiteNavbar() {
           >
             {isMobileMenuOpen ? "Close" : "Menu"}
           </button>
-          <div className="logo p-2 text-sm mix-blend-difference tracking-wide">
-            HIC
+          <div className="mono p-2 text-[13px] mix-blend-difference uppercase hover:price hover:text-white">
+            HOPE'S IPHONES
           </div>
           <div className="flex items-center gap-2">
             <button

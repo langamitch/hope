@@ -20,7 +20,7 @@ const SOUTH_AFRICAN_GREETINGS = [
   "Avuxeni",
   "Lotjhani",
   "Hello",
-  "Hallo",
+  "👋",
   "Sawubona",
   "Molo",
   "Dumela",
