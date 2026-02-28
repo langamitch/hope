@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Image from "next/image";
 import PostCard from "./PostCard";
 import { iphoneModels, type IphoneModel } from "../data/iphoneModels";
@@ -6,30 +6,59 @@ import { iphoneModels, type IphoneModel } from "../data/iphoneModels";
 type GridProps = {
   wishlistItemIds: string[];
   onToggleWishlist: (itemId: string) => void;
+  searchQuery?: string;
 };
 
-const Grid = ({ wishlistItemIds, onToggleWishlist }: GridProps) => {
+const Grid = ({ wishlistItemIds, onToggleWishlist, searchQuery = "" }: GridProps) => {
   const [activeItem, setActiveItem] = useState<IphoneModel | null>(null);
   const hasItemImage = Boolean(activeItem?.image && activeItem.image !== "/");
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+
+  const filteredPhones = useMemo(() => {
+    if (!normalizedQuery) {
+      return iphoneModels;
+    }
+
+    return iphoneModels.filter((phone) => {
+      const haystack = [
+        phone.model,
+        phone.condition,
+        phone.price,
+        ...phone.storageOptions,
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      return haystack.includes(normalizedQuery);
+    });
+  }, [normalizedQuery]);
 
   return (
     <>
-      <div className="grid w-full grid-cols-2 gap-2 md:grid-cols-4 md:gap-4 lg:grid-cols-6">
-        {iphoneModels.map((phone) => (
-          <PostCard
-            key={phone.id}
-            model={phone.model}
-            storageOptions={phone.storageOptions}
-            condition={phone.condition}
-            price={phone.price}
-            ctaLabel={phone.ctaLabel}
-            image={phone.image}
-            isWishlisted={wishlistItemIds.includes(phone.id)}
-            onToggleWishlist={() => onToggleWishlist(phone.id)}
-            onOpenDetails={() => setActiveItem(phone)}
-          />
-        ))}
-      </div>
+      {filteredPhones.length > 0 ? (
+        <div className="grid w-full grid-cols-2 gap-2 md:grid-cols-4 md:gap-4 lg:grid-cols-6">
+          {filteredPhones.map((phone) => (
+            <PostCard
+              key={phone.id}
+              model={phone.model}
+              storageOptions={phone.storageOptions}
+              condition={phone.condition}
+              price={phone.price}
+              ctaLabel={phone.ctaLabel}
+              image={phone.image}
+              isWishlisted={wishlistItemIds.includes(phone.id)}
+              onToggleWishlist={() => onToggleWishlist(phone.id)}
+              onOpenDetails={() => setActiveItem(phone)}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="flex min-h-[34vh] w-full items-center justify-center border border-black/10 bg-[#f7f7f7] px-4 text-center">
+          <p className="mono text-[13px] text-black/60">
+            No devices found{searchQuery.trim() ? ` for "${searchQuery.trim()}"` : "."}
+          </p>
+        </div>
+      )}
 
       {activeItem && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 p-4">

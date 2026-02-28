@@ -11,6 +11,7 @@ const WISHLIST_STORAGE_KEY = "hope:wishlist:item-ids";
 export default function ShopPage() {
   const [showIntro, setShowIntro] = useState(true);
   const [cartNotice, setCartNotice] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [wishlistItemIds, setWishlistItemIds] = useState<string[]>(() => {
     if (typeof window === "undefined") {
       return [];
@@ -76,8 +77,8 @@ export default function ShopPage() {
   };
 
   return (
-    <main className="min-h-screen bg-whitepb-10 pt-18 text-black">
-      <SiteNavbar />
+    <main className="min-h-screen bg-white pb-10 pt-18 text-black">
+      <SiteNavbar searchQuery={searchQuery} onSearchChange={setSearchQuery} />
       {showIntro && <PageEntryIntro label="Shop" onDone={handleIntroDone} />}
       <div className='flex flex-col p-4'>
       <section className="mb-4 mt-2 flex flex-col max-w-75 gap-2 text-[13px]">
@@ -92,6 +93,7 @@ export default function ShopPage() {
       <Grid
         wishlistItemIds={wishlistItemIds}
         onToggleWishlist={handleToggleWishlist}
+        searchQuery={searchQuery}
       />
       {cartNotice && (
         <div className="pointer-events-none fixed inset-x-0 bottom-4 z-[70] flex justify-center">

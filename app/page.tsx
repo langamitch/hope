@@ -92,6 +92,7 @@ export default function Home() {
   );
   const [isQrLoading, setIsQrLoading] = useState(false);
   const [cartNotice, setCartNotice] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [wishlistItemIds, setWishlistItemIds] = useState<string[]>(() => {
     if (typeof window === "undefined") {
       return [];
@@ -342,7 +343,7 @@ export default function Home() {
           >
             {isMobileMenuOpen ? "Close" : "Menu"}
           </button>
-          <div className="mono p-2 text-sm mix-blend-difference uppercase tracking-tight font-medium">HOPE'S iphones</div>
+          <div className="mono p-2 text-sm mix-blend-difference uppercase tracking-tight font-medium">HOPE&apos;S iphones</div>
           <div className="flex items-center gap-2">
             <button
               type="button"
@@ -392,9 +393,20 @@ export default function Home() {
           <div className="flex cursor-pointer gap-4 p-2">
             <input
               type="text"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
               placeholder="Search"
               className="w-50 border-b bg-transparent px-1 text-white placeholder:text-white/70 outline-none"
             />
+            {searchQuery.trim().length > 0 && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                className="cursor-pointer px-1 text-[12px] uppercase transition hover:bg-white hover:text-black"
+              >
+                Clear
+              </button>
+            )}
             <button
               type="button"
               onClick={() => setIsWishlistOpen((previous) => !previous)}
@@ -451,12 +463,23 @@ export default function Home() {
             Accessories
           </button>
         </div>
-        <div className="mt-8">
+        <div className="mt-8 flex items-end gap-2">
           <input
             type="text"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
             placeholder="Search"
             className="w-full border-b mono bg-transparent px-1 pb-2 text-white/90 placeholder:text-white/50 outline-none"
           />
+          {searchQuery.trim().length > 0 && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery("")}
+              className="cursor-pointer px-1 pb-1 text-[12px] uppercase transition hover:bg-white hover:text-black"
+            >
+              Clear
+            </button>
+          )}
         </div>
       </div>
       {isWishlistOpen && (
@@ -639,6 +662,7 @@ export default function Home() {
         <Grid
           wishlistItemIds={wishlistItemIds}
           onToggleWishlist={handleToggleWishlist}
+          searchQuery={searchQuery}
         />
       </section>
 

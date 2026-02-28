@@ -7,6 +7,11 @@ import { iphoneModels } from "../data/iphoneModels";
 
 const WISHLIST_STORAGE_KEY = "hope:wishlist:item-ids";
 
+type SiteNavbarProps = {
+  searchQuery?: string;
+  onSearchChange?: (value: string) => void;
+};
+
 const getWishlistItemCount = () => {
   if (typeof window === "undefined") {
     return 0;
@@ -33,11 +38,16 @@ const getWishlistItemCount = () => {
   }
 };
 
-export default function SiteNavbar() {
+export default function SiteNavbar({
+  searchQuery = "",
+  onSearchChange,
+}: SiteNavbarProps) {
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [wishlistCount, setWishlistCount] = useState(0);
+  const [localSearchQuery, setLocalSearchQuery] = useState(searchQuery);
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
+  const resolvedSearchQuery = onSearchChange ? searchQuery : localSearchQuery;
 
   const navigateTo = useCallback(
     (path: string) => {
@@ -117,6 +127,15 @@ export default function SiteNavbar() {
     });
   }, [isMobileMenuOpen]);
 
+  const handleSearchInput = (value: string) => {
+    if (onSearchChange) {
+      onSearchChange(value);
+      return;
+    }
+
+    setLocalSearchQuery(value);
+  };
+
   return (
     <>
       <div className="fixed top-0 z-20 w-full text-white mix-blend-difference">
@@ -129,7 +148,7 @@ export default function SiteNavbar() {
             {isMobileMenuOpen ? "Close" : "Menu"}
           </button>
           <div className="mono p-2 text-sm tracking-tight font-medium mix-blend-difference uppercase hover:price hover:text-white">
-            HOPE'S IPHONES
+            HOPE&apos;S IPHONES
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -185,9 +204,20 @@ export default function SiteNavbar() {
           <div className="flex cursor-pointer gap-4 p-2">
             <input
               type="text"
+              value={resolvedSearchQuery}
+              onChange={(event) => handleSearchInput(event.target.value)}
               placeholder="Search"
               className="w-50 border-b bg-transparent px-1 text-white placeholder:text-white/70 outline-none"
             />
+            {resolvedSearchQuery.trim().length > 0 && (
+              <button
+                type="button"
+                onClick={() => handleSearchInput("")}
+                className="cursor-pointer px-1 text-[12px] uppercase transition hover:bg-white hover:text-black"
+              >
+                Clear
+              </button>
+            )}
             <button
               type="button"
               onClick={() => navigateTo("/")}
@@ -238,12 +268,23 @@ export default function SiteNavbar() {
             Accessories
           </button>
         </div>
-        <div className="mt-8">
+        <div className="mt-8 flex items-end gap-2">
           <input
             type="text"
+            value={resolvedSearchQuery}
+            onChange={(event) => handleSearchInput(event.target.value)}
             placeholder="Search"
             className="w-full border-b bg-transparent px-1 pb-2 text-white/90 placeholder:text-white/50 outline-none mono"
           />
+          {resolvedSearchQuery.trim().length > 0 && (
+            <button
+              type="button"
+              onClick={() => handleSearchInput("")}
+              className="cursor-pointer px-1 pb-1 text-[12px] uppercase transition hover:bg-white hover:text-black"
+            >
+              Clear
+            </button>
+          )}
         </div>
       </div>
     </>
