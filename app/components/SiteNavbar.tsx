@@ -145,10 +145,31 @@ export default function SiteNavbar() {
           </div>
         </div>
         <div className="hidden w-full flex-row justify-between p-2 md:flex">
-          <div className="flex cursor-pointer gap-4 p-2">
-            <span onClick={() => navigateTo("/shop")}>Shop</span>
-            <span onClick={() => navigateTo("/archive")}>Archive</span>
-            <span onClick={() => navigateTo("/accessories")}>Accessories</span>
+          <div className="flex gap-4 p-2">
+            <button
+              type="button"
+              onClick={() => navigateTo("/shop")}
+              data-label="Shop"
+              className="nav-mask-link cursor-pointer"
+            >
+              <span>Shop</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => navigateTo("/archive")}
+              data-label="Archive"
+              className="nav-mask-link cursor-pointer"
+            >
+              <span>Archive</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => navigateTo("/accessories")}
+              data-label="Accessories"
+              className="nav-mask-link cursor-pointer"
+            >
+              <span>Accessories</span>
+            </button>
           </div>
           <div className="logo flex gap-4 p-2">
             <span>Hope&apos;s iPhone Collection</span>

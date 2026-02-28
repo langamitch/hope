@@ -70,6 +70,25 @@ html.lenis body {
   background: #0008ff;
 }
 
+.nav-mask-link {
+  display: inline-block;
+  line-height: 1;
+  padding: 0.08rem 0.3rem;
+  transition: background-color 0.28s ease, transform 0.28s ease;
+  will-change: transform;
+}
+
+.nav-mask-link > span {
+  display: block;
+  transition: color 0.28s ease;
+}
+
+.nav-mask-link:hover,
+.nav-mask-link:focus-visible {
+  background: #0008ff;
+  transform: translateY(-1px);
+}
+
 @keyframes loader-spin {
   from {
     transform: rotate(0deg);

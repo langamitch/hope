@@ -338,14 +338,31 @@ export default function Home() {
           </div>
         </div>
         <div className="hidden w-full flex-row justify-between p-2 md:flex">
-          <div className="flex cursor-pointer gap-4 p-2">
-            <span onClick={() => navigateTo("/shop")}>Shop</span>
-            <span onClick={() => navigateTo("/archive")}>
-              Archive
-            </span>
-            <span onClick={() => navigateTo("/accessories")}>
-              Accessories
-            </span>
+          <div className="flex gap-4 p-2">
+            <button
+              type="button"
+              onClick={() => navigateTo("/shop")}
+              data-label="Shop"
+              className="nav-mask-link cursor-pointer"
+            >
+              <span>Shop</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => navigateTo("/archive")}
+              data-label="Archive"
+              className="nav-mask-link cursor-pointer"
+            >
+              <span>Archive</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => navigateTo("/accessories")}
+              data-label="Accessories"
+              className="nav-mask-link cursor-pointer"
+            >
+              <span>Accessories</span>
+            </button>
           </div>
           <div className="logo flex gap-4 p-2">
             <span>Hope&apos;s iPhone Collection</span>
@@ -562,7 +579,7 @@ export default function Home() {
             allowFullScreen
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/35" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/35 to-black/35" />
         <div className="absolute top-1/2 right-6 z-10 max-w-xl -translate-y-1/2 text-right text-white sm:right-10">
           <p className="text-lg leading-tight tracking-tight mix-blend-difference sm:text-2xl">
             Affordable brand new and pre-owned devices at a <br />

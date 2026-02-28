@@ -44,7 +44,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Pre-Owned",
     price: "R4 500",
     ctaLabel: "Add to cart",
-    image: "/",
+    image: "/iphone11.jpg",
   },
   {
     id: "iphone-11-128",
@@ -53,7 +53,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Pre-Owned",
     price: "R4 700",
     ctaLabel: "Add to cart",
-    image: "/",
+    image: "/iphone11.jpg",
   },
   {
     id: "iphone-11-pro",
@@ -81,7 +81,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Pre-Owned",
     price: "R5 400",
     ctaLabel: "Add to cart",
-    image: "/",
+    image: "/iphone12.jpg",
   },
   {
     id: "iphone-12-128",
@@ -90,7 +90,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Pre-Owned",
     price: "R6 500",
     ctaLabel: "Add to cart",
-    image: "/",
+    image: "/iphone12.jpg",
   },
   {
     id: "iphone-12-pro",
@@ -118,7 +118,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Pre-Owned",
     price: "R7 100",
     ctaLabel: "Add to cart",
-    image: "/",
+    image: "/13.jpg",
   },
   {
     id: "iphone-13-pro",
@@ -146,7 +146,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Pre-Owned",
     price: "R8 450",
     ctaLabel: "Add to cart",
-    image: "/",
+    image: "/iphone14.jpg",
   },
   {
     id: "iphone-14-pro",
@@ -164,7 +164,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Pre-Owned",
     price: "R13 000",
     ctaLabel: "Add to cart",
-    image: "/",
+    image: "/14promaz.jpg",
   },
 
   {
@@ -183,7 +183,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Brand New",
     price: "R14 400",
     ctaLabel: "Add to cart",
-    image: "/",
+    image: "/iphone15pro.jpg",
   },
   {
     id: "iphone-15-pro-max",
@@ -192,7 +192,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Brand New",
     price: "R16 000",
     ctaLabel: "Add to cart",
-    image: "/",
+    image: "/15promax.jpg",
   },
 
   {
@@ -202,7 +202,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Brand New",
     price: "R13 300",
     ctaLabel: "Add to cart",
-    image: "/",
+    image: "/iphone16.jpg",
   },
   {
     id: "iphone-16-pro",
