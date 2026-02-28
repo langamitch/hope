@@ -174,7 +174,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Brand New",
     price: "R11 000",
     ctaLabel: "Add to cart",
-    image: "/iphone15.jpg",
+    image: "/iphone15.webp",
   },
   {
     id: "iphone-15-pro",
