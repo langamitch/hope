@@ -7,9 +7,10 @@ type PostCardProps = Pick<
   IphoneModel,
   "model" | "storageOptions" | "condition" | "price" | "ctaLabel" | "image"
 > & {
-  isWishlisted: boolean
-  onToggleWishlist: () => void
-}
+  isWishlisted: boolean;
+  onToggleWishlist: () => void;
+  onOpenDetails?: () => void;
+};
 
 const PostCard = ({
   model,
@@ -20,13 +21,29 @@ const PostCard = ({
   image,
   isWishlisted,
   onToggleWishlist,
+  onOpenDetails,
 }: PostCardProps) => {
   const hasImage = Boolean(image && image !== "/");
   const imageSrc = hasImage ? image : "";
   const [isImageLoading, setIsImageLoading] = useState(hasImage);
 
   return (
-    <div className="flex flex-col w-full">
+    <div
+      className="flex w-full cursor-pointer flex-col"
+      role={onOpenDetails ? "button" : undefined}
+      tabIndex={onOpenDetails ? 0 : undefined}
+      onClick={onOpenDetails}
+      onKeyDown={(event) => {
+        if (!onOpenDetails) {
+          return;
+        }
+
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onOpenDetails();
+        }
+      }}
+    >
       {/* IMAGE AREA */}
       <div className="relative h-70 bg-[#f3f3f3] flex items-center justify-center">
         {hasImage && (
@@ -73,7 +90,10 @@ const PostCard = ({
           <span className="price px-0.5 text-white">{price}</span>
           <button
             type="button"
-            onClick={onToggleWishlist}
+            onClick={(event) => {
+              event.stopPropagation();
+              onToggleWishlist();
+            }}
             aria-label={
               isWishlisted
                 ? `Remove ${model} from list`

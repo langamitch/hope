@@ -52,9 +52,9 @@ export default function PageEntryIntro({
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black text-white"
+      className="fixed inset-0 z-[100] flex items-center justify-center price text-white"
     >
-      <p className="mono text-[13px] uppercase tracking-[0.2em]">{label}</p>
+      <p className="mono text-[13px] capitalize tracking-tight">{label}</p>
     </div>
   );
 }

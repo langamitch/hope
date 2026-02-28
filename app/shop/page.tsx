@@ -1,30 +1,75 @@
 "use client";
 
-import Link from "next/link";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import PageEntryIntro from "../components/PageEntryIntro";
+import SiteNavbar from "../components/SiteNavbar";
+import Grid from "../components/Grid";
+import { iphoneModels } from "../data/iphoneModels";
+
+const WISHLIST_STORAGE_KEY = "hope:wishlist:item-ids";
 
 export default function ShopPage() {
   const [showIntro, setShowIntro] = useState(true);
+  const [wishlistItemIds, setWishlistItemIds] = useState<string[]>(() => {
+    if (typeof window === "undefined") {
+      return [];
+    }
+
+    try {
+      const storedItemIds = localStorage.getItem(WISHLIST_STORAGE_KEY);
+      if (!storedItemIds) {
+        return [];
+      }
+
+      const parsedItemIds: unknown = JSON.parse(storedItemIds);
+      if (!Array.isArray(parsedItemIds)) {
+        return [];
+      }
+
+      return parsedItemIds.filter(
+        (itemId): itemId is string =>
+          typeof itemId === "string" &&
+          iphoneModels.some((phone) => phone.id === itemId)
+      );
+    } catch {
+      return [];
+    }
+  });
 
   const handleIntroDone = useCallback(() => {
     setShowIntro(false);
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(wishlistItemIds));
+    window.dispatchEvent(new Event("wishlist-updated"));
+  }, [wishlistItemIds]);
+
+  const handleToggleWishlist = useCallback((itemId: string) => {
+    setWishlistItemIds((currentItems) =>
+      currentItems.includes(itemId)
+        ? currentItems.filter((existingId) => existingId !== itemId)
+        : [...currentItems, itemId]
+    );
+  }, []);
+
   return (
-    <main className="min-h-screen bg-white px-4 py-10 text-black">
+    <main className="min-h-screen bg-white px-4 pb-10 pt-18 text-black">
+      <SiteNavbar />
       {showIntro && <PageEntryIntro label="Shop" onDone={handleIntroDone} />}
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
-        <div className="flex items-center justify-between border-b border-black/20 pb-3">
-          <h1 className="mono text-xl uppercase">Shop</h1>
-          <Link href="/" className="mono text-[13px] uppercase hover:bg-black hover:text-white px-1">
-            Home
-          </Link>
-        </div>
-        <p className="mono text-[13px] text-black/70">
-          Welcome to the shop page. We can now plug in shop-specific content and filters here.
+      <section className="mb-4 mt-2 flex flex-col gap-2 text-[13px]">
+        <p className="mono text-black/70">
+          Browse our tested iPhone range and open any device card to view full
+          details before ordering.
         </p>
-      </div>
+        <p className="price w-fit px-2 py-1 text-white">
+          Lay-buy is available on all devices.
+        </p>
+      </section>
+      <Grid
+        wishlistItemIds={wishlistItemIds}
+        onToggleWishlist={handleToggleWishlist}
+      />
     </main>
   );
 }
