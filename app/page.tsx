@@ -342,7 +342,7 @@ export default function Home() {
           >
             {isMobileMenuOpen ? "Close" : "Menu"}
           </button>
-          <div className="mono p-2 text-sm mix-blend-difference tracking-wide">HOPE'S iphones</div>
+          <div className="mono p-2 text-sm mix-blend-difference uppercase tracking-wide">HOPE'S iphones</div>
           <div className="flex items-center gap-2">
             <button
               type="button"
