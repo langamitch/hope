@@ -342,7 +342,7 @@ export default function Home() {
           >
             {isMobileMenuOpen ? "Close" : "Menu"}
           </button>
-          <div className="mono p-2 text-sm mix-blend-difference uppercase tracking-tight">HOPE'S iphones</div>
+          <div className="mono p-2 text-sm mix-blend-difference uppercase tracking-tight font-medium">HOPE'S iphones</div>
           <div className="flex items-center gap-2">
             <button
               type="button"
@@ -619,6 +619,7 @@ export default function Home() {
           </p>
           <button
             type="button"
+            onClick={() => navigateTo("/shop")}
             className="mt-6 inline-flex items-center border border-white bg-white px-6 py-2 text-sm font-medium text-black transition hover:bg-transparent hover:text-white"
           >
             Shop now
@@ -632,7 +633,7 @@ export default function Home() {
           <h3 className='text-white mono text-xs  px-2 price'>Shop</h3>
           <h3 className='text-white mono text-xs  px-2 bg-black'>Brand New</h3>
           <h3 className='text-white mono text-xs  px-2 bg-black'>Pre-owned</h3>
-          <h3 className='text-white mono text-xs  px-2 bg-black'>Student sale</h3>
+          <h3 className='text-white mono text-xs  px-2 bg-black'>Student sale </h3>
         </div>
          <h3 className='mono text-sm leading-tight mb-3'>Browse at your own pace and reach out <br />anytime if you need advice, we&apos;re here <br />to help</h3>
         <Grid
