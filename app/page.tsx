@@ -34,7 +34,7 @@ const footerInfoContent: Record<FooterInfoKey, string> = {
     "We do not offer refunds. However, exchanges are accepted within 3 months of purchase if the device has a verified technical issue. The device must be returned in good condition with no physical damage. All exchanges are subject to inspection.",
 
   about:
-    "We specialize in affordable brand new and quality pre-owned iPhones. Every device is carefully tested to ensure excellent performance and reliability. Our goal is to provide trusted devices at competitive prices with honest service.",
+    "We specialize in affordable Pre-Owned and quality pre-owned iPhones. Every device is carefully tested to ensure excellent performance and reliability. Our goal is to provide trusted devices at competitive prices with honest service.",
 
   privacy:
     "Customer information E.g name, cell number, device purchased,and location sent to is stored securely and only kept for a limited period for record-keeping and dispute resolution purposes. We do not share your personal details with third parties.",
@@ -60,13 +60,13 @@ const getWhatsappMessage = (item: IphoneModel) => {
 const getWhatsappUrl = (item: IphoneModel) => {
   const phone = normalizeWhatsappNumber(WHATSAPP_NUMBER);
   return `https://wa.me/${phone}?text=${encodeURIComponent(
-    getWhatsappMessage(item)
+    getWhatsappMessage(item),
   )}`;
 };
 
 const getWhatsappQrUrl = (item: IphoneModel) =>
   `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(
-    getWhatsappUrl(item)
+    getWhatsappUrl(item),
   )}`;
 
 const isValidEmail = (value: string) =>
@@ -77,9 +77,8 @@ export default function Home() {
   const youtubeVideoId = "Gg_ncsRWboo";
   const [showIntro, setShowIntro] = useState(true);
   const [useInteractiveHeroVideo, setUseInteractiveHeroVideo] = useState(false);
-  const [activeFooterInfo, setActiveFooterInfo] = useState<FooterInfoKey | null>(
-    null
-  );
+  const [activeFooterInfo, setActiveFooterInfo] =
+    useState<FooterInfoKey | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
@@ -88,7 +87,7 @@ export default function Home() {
     useState<NewsletterSignupState>("idle");
   const [newsletterFeedback, setNewsletterFeedback] = useState("");
   const [activeOrderItem, setActiveOrderItem] = useState<IphoneModel | null>(
-    null
+    null,
   );
   const [isQrLoading, setIsQrLoading] = useState(false);
   const [cartNotice, setCartNotice] = useState("");
@@ -112,7 +111,7 @@ export default function Home() {
       return parsedItemIds.filter(
         (itemId): itemId is string =>
           typeof itemId === "string" &&
-          iphoneModels.some((phone) => phone.id === itemId)
+          iphoneModels.some((phone) => phone.id === itemId),
       );
     } catch (error) {
       console.error("Unable to read wishlist data from localStorage", error);
@@ -213,7 +212,7 @@ export default function Home() {
       wishlistItemIds
         .map((itemId) => iphoneModels.find((phone) => phone.id === itemId))
         .filter((item): item is IphoneModel => Boolean(item)),
-    [wishlistItemIds]
+    [wishlistItemIds],
   );
 
   const handleToggleWishlist = (itemId: string) => {
@@ -224,10 +223,10 @@ export default function Home() {
     setWishlistItemIds((currentItems) =>
       isRemoving
         ? currentItems.filter((existingId) => existingId !== itemId)
-        : [...currentItems, itemId]
+        : [...currentItems, itemId],
     );
     setCartNotice(
-      `${itemName} ${isRemoving ? "removed from cart" : "added to cart"}`
+      `${itemName} ${isRemoving ? "removed from cart" : "added to cart"}`,
     );
   };
 
@@ -237,7 +236,7 @@ export default function Home() {
       setIsWishlistOpen(false);
       router.push(path);
     },
-    [router]
+    [router],
   );
 
   const logWishlistInquiry = async (item: IphoneModel) => {
@@ -278,7 +277,7 @@ export default function Home() {
     window.open(
       getWhatsappUrl(activeOrderItem),
       "_blank",
-      "noopener,noreferrer"
+      "noopener,noreferrer",
     );
   };
 
@@ -306,13 +305,16 @@ export default function Home() {
         }),
       });
 
-      const payload = (await response.json().catch(() => null)) as
-        | { error?: string; alreadySubscribed?: boolean }
-        | null;
+      const payload = (await response.json().catch(() => null)) as {
+        error?: string;
+        alreadySubscribed?: boolean;
+      } | null;
 
       if (!response.ok) {
         setNewsletterState("error");
-        setNewsletterFeedback(payload?.error ?? "Could not sign you up right now.");
+        setNewsletterFeedback(
+          payload?.error ?? "Could not sign you up right now.",
+        );
         return;
       }
 
@@ -320,7 +322,7 @@ export default function Home() {
       setNewsletterFeedback(
         payload?.alreadySubscribed
           ? "You are already subscribed."
-          : "Thanks you."
+          : "Thanks you.",
       );
       setNewsletterEmail("");
     } catch (error) {
@@ -343,7 +345,9 @@ export default function Home() {
           >
             {isMobileMenuOpen ? "Close" : "Menu"}
           </button>
-          <div className="mono p-2 text-sm mix-blend-difference uppercase tracking-tight font-medium">HOPE&apos;S iphones</div>
+          <div className="mono p-2 text-sm mix-blend-difference uppercase tracking-tight font-medium">
+            HOPE&apos;S iphones
+          </div>
           <div className="flex items-center gap-2">
             <button
               type="button"
@@ -425,7 +429,6 @@ export default function Home() {
         className="fixed top-0 right-0 left-0 z-50 price px-4 pt-4 pb-6 text-white/90 mix-blend-normal md:hidden"
       >
         <div className="relative flex items-center justify-center pb-3">
-          
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(false)}
@@ -496,11 +499,16 @@ export default function Home() {
           </div>
           <div className="mt-4 text-[13px]">
             {wishlistItems.length === 0 ? (
-              <div className='flex flex-col gap-1'>
-              <p className='justify-center  w-fit mt-2 p-1'>Nothing here yet! Browse to see more</p>
-              <span 
-              onClick={() => navigateTo("/shop")}
-              className='mono price px-1 mx-1 text-white cursor pointer mt-4 w-fit' >Shop</span>
+              <div className="flex flex-col gap-1">
+                <p className="justify-center  w-fit mt-2 p-1">
+                  Nothing here yet! Browse to see more
+                </p>
+                <span
+                  onClick={() => navigateTo("/shop")}
+                  className="mono price px-1 mx-1 text-white cursor pointer mt-4 w-fit"
+                >
+                  Shop
+                </span>
               </div>
             ) : (
               <ul className="mt-10 space-y-2">
@@ -620,7 +628,9 @@ export default function Home() {
         <div className="absolute inset-0">
           <iframe
             className={`absolute top-1/2 left-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2 ${
-              useInteractiveHeroVideo ? "pointer-events-auto" : "pointer-events-none"
+              useInteractiveHeroVideo
+                ? "pointer-events-auto"
+                : "pointer-events-none"
             }`}
             src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&mute=1&controls=${
               useInteractiveHeroVideo ? 1 : 0
@@ -634,8 +644,8 @@ export default function Home() {
         <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/35 to-black/35" />
         <div className="absolute top-1/2 right-6 z-10 max-w-xl -translate-y-1/2 text-right text-white sm:right-10">
           <p className="text-lg leading-tight tracking-tight mix-blend-difference sm:text-2xl">
-            Affordable brand new and pre-owned devices at a <br />
-            student-friendly prices. We specialize in affordable brand new and
+            Affordable Pre-Owned and pre-owned devices at a <br />
+            student-friendly prices. We specialize in affordable Pre-Owned and
             quality pre-owned iPhones. Every device is carefully tested to
             ensure excellent performance and reliability. Our goal is to provide
             trusted devices at competitive prices with honest service
@@ -651,14 +661,19 @@ export default function Home() {
       </section>
 
       <section className="p-4 gap-1 min-h-screen flex flex-col">
-        <div className='mb-3 flex w-full justify-between'>
-          
-          <h3 className='text-white mono text-xs  px-2 price'>Shop</h3>
-          <h3 className='text-white mono text-xs  px-2 bg-black'>Brand New</h3>
-          <h3 className='text-white mono text-xs  px-2 bg-black'>Pre-owned</h3>
-          <h3 className='text-white mono text-xs  px-2 bg-black'>Student sale </h3>
+        <div className="mb-3 flex w-full justify-between">
+          <h3 className="text-white mono text-xs  px-2 price">Shop</h3>
+          <h3 className="text-white mono text-xs  px-2 bg-black">Pre-Owned</h3>
+          <h3 className="text-white mono text-xs  px-2 bg-black">Pre-owned</h3>
+          <h3 className="text-white mono text-xs  px-2 bg-black">
+            Student sale{" "}
+          </h3>
         </div>
-         <h3 className='mono text-sm leading-tight mb-3'>Browse at your own pace and reach out <br />anytime if you need advice, we&apos;re here <br />to help</h3>
+        <h3 className="mono text-sm leading-tight mb-3">
+          Browse at your own pace and reach out <br />
+          anytime if you need advice, we&apos;re here <br />
+          to help
+        </h3>
         <Grid
           wishlistItemIds={wishlistItemIds}
           onToggleWishlist={handleToggleWishlist}
@@ -666,8 +681,8 @@ export default function Home() {
         />
       </section>
 
-      <section className='h-screen p-4 mt-6'>
-        <div className='w-full h-full bg-[#f3f3f3]'></div>
+      <section className="h-screen p-4 mt-6">
+        <div className="w-full h-full bg-[#f3f3f3]"></div>
       </section>
 
       {/*footer */}

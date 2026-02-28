@@ -2,7 +2,7 @@ export type IphoneModel = {
   id: string;
   model: string;
   storageOptions: string[];
-  condition: "Pre-Owned" | "Brand New";
+  condition: "Pre-Owned" | "Pre-Owned";
   price: string;
   ctaLabel: string;
   image: string;
@@ -99,7 +99,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Pre-Owned",
     price: "R7 200",
     ctaLabel: "Add to cart",
-    image: "/iphonePre-Owned",
+    image: "/iphone12pro.jpg",
   },
   {
     id: "iphone-12-pro-max",
