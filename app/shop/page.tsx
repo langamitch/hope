@@ -5,47 +5,17 @@ import PageEntryIntro from "../components/PageEntryIntro";
 import SiteNavbar from "../components/SiteNavbar";
 import Grid from "../components/Grid";
 import { iphoneModels } from "../data/iphoneModels";
-
-const WISHLIST_STORAGE_KEY = "hope:wishlist:item-ids";
+import { useCart } from "../components/CartProvider";
 
 export default function ShopPage() {
+  const { cartItemIds, toggleItem } = useCart();
   const [showIntro, setShowIntro] = useState(true);
   const [cartNotice, setCartNotice] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [wishlistItemIds, setWishlistItemIds] = useState<string[]>(() => {
-    if (typeof window === "undefined") {
-      return [];
-    }
-
-    try {
-      const storedItemIds = localStorage.getItem(WISHLIST_STORAGE_KEY);
-      if (!storedItemIds) {
-        return [];
-      }
-
-      const parsedItemIds: unknown = JSON.parse(storedItemIds);
-      if (!Array.isArray(parsedItemIds)) {
-        return [];
-      }
-
-      return parsedItemIds.filter(
-        (itemId): itemId is string =>
-          typeof itemId === "string" &&
-          iphoneModels.some((phone) => phone.id === itemId)
-      );
-    } catch {
-      return [];
-    }
-  });
 
   const handleIntroDone = useCallback(() => {
     setShowIntro(false);
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(wishlistItemIds));
-    window.dispatchEvent(new Event("wishlist-updated"));
-  }, [wishlistItemIds]);
 
   useEffect(() => {
     if (!cartNotice) {
@@ -64,13 +34,8 @@ export default function ShopPage() {
   const handleToggleWishlist = (itemId: string) => {
     const item = iphoneModels.find((phone) => phone.id === itemId);
     const itemName = item?.model.replace(/^Apple\s+/i, "") ?? "Item";
-    const isRemoving = wishlistItemIds.includes(itemId);
-
-    setWishlistItemIds((currentItems) =>
-      isRemoving
-        ? currentItems.filter((existingId) => existingId !== itemId)
-        : [...currentItems, itemId]
-    );
+    const isRemoving = cartItemIds.includes(itemId);
+    toggleItem(itemId);
     setCartNotice(
       `${itemName} ${isRemoving ? "removed from cart" : "added to cart"}`
     );
@@ -91,7 +56,7 @@ export default function ShopPage() {
         </p>
       </section>
       <Grid
-        wishlistItemIds={wishlistItemIds}
+        wishlistItemIds={cartItemIds}
         onToggleWishlist={handleToggleWishlist}
         searchQuery={searchQuery}
       />

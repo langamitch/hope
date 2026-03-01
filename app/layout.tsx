@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import { Geist_Mono } from "next/font/google";
 import SmoothScroll from "./components/SmoothScroll";
 import GoogleAnalytics from "./components/GoogleAnalytics";
+import CartProvider from "./components/CartProvider";
+import CartDrawer from "./components/CartDrawer";
 import "./globals.css";
 
 const helveticaNeue = localFont({
@@ -49,9 +51,12 @@ export default function RootLayout({
       <body
         className={`${helveticaNeue.variable} ${ppEditorialNewItalic.variable} ${ftTogetherBold.variable} ${geistMono.variable} antialiased`}
       >
-        <SmoothScroll />
-        {children}
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        <CartProvider>
+          <SmoothScroll />
+          {children}
+          <CartDrawer />
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        </CartProvider>
       </body>
     </html>
   );

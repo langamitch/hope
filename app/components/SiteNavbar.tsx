@@ -3,39 +3,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { gsap } from "gsap";
-import { iphoneModels } from "../data/iphoneModels";
-
-const WISHLIST_STORAGE_KEY = "hope:wishlist:item-ids";
+import { useCart } from "./CartProvider";
 
 type SiteNavbarProps = {
   searchQuery?: string;
   onSearchChange?: (value: string) => void;
-};
-
-const getWishlistItemCount = () => {
-  if (typeof window === "undefined") {
-    return 0;
-  }
-
-  try {
-    const storedItemIds = localStorage.getItem(WISHLIST_STORAGE_KEY);
-    if (!storedItemIds) {
-      return 0;
-    }
-
-    const parsedItemIds: unknown = JSON.parse(storedItemIds);
-    if (!Array.isArray(parsedItemIds)) {
-      return 0;
-    }
-
-    return parsedItemIds.filter(
-      (itemId): itemId is string =>
-        typeof itemId === "string" &&
-        iphoneModels.some((phone) => phone.id === itemId)
-    ).length;
-  } catch {
-    return 0;
-  }
 };
 
 export default function SiteNavbar({
@@ -43,8 +15,8 @@ export default function SiteNavbar({
   onSearchChange,
 }: SiteNavbarProps) {
   const router = useRouter();
+  const { cartItemIds, toggleCart, closeCart } = useCart();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [wishlistCount, setWishlistCount] = useState(0);
   const [localSearchQuery, setLocalSearchQuery] = useState(searchQuery);
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
   const resolvedSearchQuery = onSearchChange ? searchQuery : localSearchQuery;
@@ -52,28 +24,11 @@ export default function SiteNavbar({
   const navigateTo = useCallback(
     (path: string) => {
       setIsMobileMenuOpen(false);
+      closeCart();
       router.push(path);
     },
-    [router]
+    [closeCart, router]
   );
-
-  useEffect(() => {
-    const syncWishlistCount = () => {
-      setWishlistCount(getWishlistItemCount());
-    };
-    const syncTimeoutId = window.setTimeout(syncWishlistCount, 0);
-
-    window.addEventListener("storage", syncWishlistCount);
-    window.addEventListener("focus", syncWishlistCount);
-    window.addEventListener("wishlist-updated", syncWishlistCount);
-
-    return () => {
-      window.clearTimeout(syncTimeoutId);
-      window.removeEventListener("storage", syncWishlistCount);
-      window.removeEventListener("focus", syncWishlistCount);
-      window.removeEventListener("wishlist-updated", syncWishlistCount);
-    };
-  }, []);
 
   useEffect(() => {
     const mobileMenu = mobileMenuRef.current;
@@ -136,6 +91,11 @@ export default function SiteNavbar({
     setLocalSearchQuery(value);
   };
 
+  const handleCartClick = () => {
+    setIsMobileMenuOpen(false);
+    toggleCart();
+  };
+
   return (
     <>
       <div className="fixed top-0 z-20 w-full text-white mix-blend-difference">
@@ -153,13 +113,13 @@ export default function SiteNavbar({
           <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={() => navigateTo("/")}
+              onClick={handleCartClick}
               className="cursor-pointer px-1 text-[13px] uppercase transition hover:bg-white hover:text-black"
             >
               CART
             </button>
             <span className="border-2 border-white px-2 text-white">
-              {wishlistCount}
+              {cartItemIds.length}
             </span>
           </div>
         </div>
@@ -220,13 +180,13 @@ export default function SiteNavbar({
             )}
             <button
               type="button"
-              onClick={() => navigateTo("/")}
+              onClick={handleCartClick}
               className="cursor-pointer px-1 transition hover:bg-white hover:text-black"
             >
-              Wishlist
+              CART
             </button>
             <span className="border-2 border-white px-2 text-white">
-              {wishlistCount}
+              {cartItemIds.length}
             </span>
           </div>
         </div>
