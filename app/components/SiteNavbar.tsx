@@ -144,6 +144,7 @@ export default function SiteNavbar({
             >
               <span>Shop</span>
             </button>
+            {/** 
             <button
               type="button"
               onClick={() => navigateTo("/archive")}
@@ -159,7 +160,7 @@ export default function SiteNavbar({
               className="nav-mask-link cursor-pointer"
             >
               <span>Accessories</span>
-            </button>
+            </button>*/}
           </div>
           <div className="logo flex gap-4 p-2">
             <span>Hope&apos;s iPhone Collection</span>
@@ -227,6 +228,7 @@ export default function SiteNavbar({
           >
             Shop
           </button>
+          {/** 
           <button
             type="button"
             onClick={() => navigateTo("/archive")}
@@ -240,7 +242,7 @@ export default function SiteNavbar({
             className="w-fit cursor-pointer px-1 text-left font-medium uppercase mono hover:bg-white hover:text-black"
           >
             Accessories
-          </button>
+          </button>*/}
         </div>
         {shouldShowSearch && (
           <div className="mt-8 flex items-end gap-2">
