@@ -102,7 +102,8 @@ const Grid = ({ wishlistItemIds, onToggleWishlist, searchQuery = "" }: GridProps
                 <div className="text-black/60">Price: {activeItem.price}</div>
                 <div className="text-black/60">
                   Description: Reliable iPhone with full core features working
-                  and ready for everyday use. Available in assorted colors.
+                  and ready for everyday us. Comes with a charging cable and devices 
+                  are available in assorted colors.
                 </div>
                 <div className="text-black/60">
                   Lay-buy: Available on all devices.
