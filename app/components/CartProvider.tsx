@@ -69,8 +69,13 @@ export default function CartProvider({ children }: { children: ReactNode }) {
     };
 
     window.addEventListener("storage", syncFromStorage);
+    window.addEventListener("wishlist-updated", syncFromStorage);
+    window.addEventListener("focus", syncFromStorage);
+
     return () => {
       window.removeEventListener("storage", syncFromStorage);
+      window.removeEventListener("wishlist-updated", syncFromStorage);
+      window.removeEventListener("focus", syncFromStorage);
     };
   }, []);
 

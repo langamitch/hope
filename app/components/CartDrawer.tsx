@@ -46,14 +46,29 @@ export default function CartDrawer() {
     null
   );
   const [isQrLoading, setIsQrLoading] = useState(false);
+  const [inquiryFeedback, setInquiryFeedback] = useState("");
 
   useEffect(() => {
     setIsQrLoading(Boolean(activeOrderItem));
   }, [activeOrderItem]);
 
+  useEffect(() => {
+    if (!inquiryFeedback) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setInquiryFeedback("");
+    }, 2200);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [inquiryFeedback]);
+
   const logWishlistInquiry = async (item: IphoneModel) => {
     try {
-      await fetch("/api/wishlist-inquiries", {
+      const response = await fetch("/api/wishlist-inquiries", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -67,8 +82,17 @@ export default function CartDrawer() {
           whatsappUrl: getWhatsappUrl(item),
         }),
       });
+
+      if (!response.ok) {
+        setInquiryFeedback(
+          "Could not save inquiry details right now. You can still continue on WhatsApp."
+        );
+      }
     } catch (error) {
       console.error("Failed to log wishlist inquiry", error);
+      setInquiryFeedback(
+        "Could not save inquiry details right now. You can still continue on WhatsApp."
+      );
     }
   };
 
@@ -224,6 +248,13 @@ export default function CartDrawer() {
               </button>
             </div>
           </div>
+        </div>
+      )}
+      {inquiryFeedback && (
+        <div className="pointer-events-none fixed inset-x-0 bottom-4 z-[80] flex justify-center">
+          <p className="rounded-sm bg-black px-3 py-1.5 text-[12px] text-white shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
+            {inquiryFeedback}
+          </p>
         </div>
       )}
     </>

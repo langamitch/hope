@@ -8,11 +8,13 @@ import { useCart } from "./CartProvider";
 type SiteNavbarProps = {
   searchQuery?: string;
   onSearchChange?: (value: string) => void;
+  showSearch?: boolean;
 };
 
 export default function SiteNavbar({
   searchQuery = "",
   onSearchChange,
+  showSearch,
 }: SiteNavbarProps) {
   const router = useRouter();
   const { cartItemIds, toggleCart, closeCart } = useCart();
@@ -20,6 +22,7 @@ export default function SiteNavbar({
   const [localSearchQuery, setLocalSearchQuery] = useState(searchQuery);
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
   const resolvedSearchQuery = onSearchChange ? searchQuery : localSearchQuery;
+  const shouldShowSearch = showSearch ?? Boolean(onSearchChange);
 
   const navigateTo = useCallback(
     (path: string) => {
@@ -128,7 +131,7 @@ export default function SiteNavbar({
             <button
               type="button"
               onClick={() => navigateTo("/")}
-              data-label="Shop"
+              data-label="home"
               className="nav-mask-link cursor-pointer"
             >
               <span>Home</span>
@@ -162,28 +165,32 @@ export default function SiteNavbar({
             <span>Hope&apos;s iPhone Collection</span>
           </div>
           <div className="flex cursor-pointer gap-4 p-2">
-            <input
-              type="text"
-              value={resolvedSearchQuery}
-              onChange={(event) => handleSearchInput(event.target.value)}
-              placeholder="Search"
-              className="w-50 border-b bg-transparent px-1 text-white placeholder:text-white/70 outline-none"
-            />
-            {resolvedSearchQuery.trim().length > 0 && (
-              <button
-                type="button"
-                onClick={() => handleSearchInput("")}
-                className="cursor-pointer px-1 text-[12px] uppercase transition hover:bg-white hover:text-black"
-              >
-                Clear
-              </button>
+            {shouldShowSearch && (
+              <>
+                <input
+                  type="text"
+                  value={resolvedSearchQuery}
+                  onChange={(event) => handleSearchInput(event.target.value)}
+                  placeholder="Search"
+                  className="w-50 border-b bg-transparent px-1 text-white placeholder:text-white/70 outline-none"
+                />
+                {resolvedSearchQuery.trim().length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => handleSearchInput("")}
+                    className="cursor-pointer px-1 text-[12px] uppercase transition hover:bg-white hover:text-black"
+                  >
+                    Clear
+                  </button>
+                )}
+              </>
             )}
             <button
               type="button"
               onClick={handleCartClick}
               className="cursor-pointer px-1 transition hover:bg-white hover:text-black"
             >
-              CART
+              Cart
             </button>
             <span className="border-2 border-white px-2 text-white">
               {cartItemIds.length}
@@ -208,6 +215,13 @@ export default function SiteNavbar({
         <div className="mt-5 flex flex-col gap-3 text-base font-semibold uppercase mono">
           <button
             type="button"
+            onClick={() => navigateTo("/")}
+            className="w-fit cursor-pointer px-1 text-left font-medium uppercase mono hover:bg-white hover:text-black"
+          >
+            Home
+          </button>
+          <button
+            type="button"
             onClick={() => navigateTo("/shop")}
             className="w-fit cursor-pointer px-1 text-left font-medium uppercase mono hover:bg-white hover:text-black"
           >
@@ -228,24 +242,26 @@ export default function SiteNavbar({
             Accessories
           </button>
         </div>
-        <div className="mt-8 flex items-end gap-2">
-          <input
-            type="text"
-            value={resolvedSearchQuery}
-            onChange={(event) => handleSearchInput(event.target.value)}
-            placeholder="Search"
-            className="w-full border-b bg-transparent px-1 pb-2 text-white/90 placeholder:text-white/50 outline-none mono"
-          />
-          {resolvedSearchQuery.trim().length > 0 && (
-            <button
-              type="button"
-              onClick={() => handleSearchInput("")}
-              className="cursor-pointer px-1 pb-1 text-[12px] uppercase transition hover:bg-white hover:text-black"
-            >
-              Clear
-            </button>
-          )}
-        </div>
+        {shouldShowSearch && (
+          <div className="mt-8 flex items-end gap-2">
+            <input
+              type="text"
+              value={resolvedSearchQuery}
+              onChange={(event) => handleSearchInput(event.target.value)}
+              placeholder="Search"
+              className="w-full border-b bg-transparent px-1 pb-2 text-white/90 placeholder:text-white/50 outline-none mono"
+            />
+            {resolvedSearchQuery.trim().length > 0 && (
+              <button
+                type="button"
+                onClick={() => handleSearchInput("")}
+                className="cursor-pointer px-1 pb-1 text-[12px] uppercase transition hover:bg-white hover:text-black"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </>
   );
