@@ -62,7 +62,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Pre-Owned",
     price: "R5 500",
     ctaLabel: "Add to cart",
-    image: "/iphone 11 pro.jpg",
+    image: "/11ro.jpg",
   },
   {
     id: "iphone-11-pro-max",
