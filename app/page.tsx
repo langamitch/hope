@@ -426,7 +426,7 @@ export default function Home() {
         />
       </section>
 
-      <section className="h-screen p-4 mt-6">
+      <section className="h-screen hidden p-4 mt-6">
         <div className="w-full h-full bg-[#f3f3f3]"></div>
       </section>
 
