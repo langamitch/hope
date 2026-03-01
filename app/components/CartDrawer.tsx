@@ -7,8 +7,8 @@ import DualRingLoader from "./DualRingLoader";
 import { useCart } from "./CartProvider";
 import { type IphoneModel } from "../data/iphoneModels";
 
-const WHATSAPP_CONTACT_NAME = "Wandile";
-const WHATSAPP_NUMBER = "0815909191";
+const WHATSAPP_CONTACT_NAME = "Hope";
+const WHATSAPP_NUMBER = "0718198376";
 
 const getPrimaryStorage = (item: IphoneModel) =>
   item.storageOptions[0] ?? "Storage option";
