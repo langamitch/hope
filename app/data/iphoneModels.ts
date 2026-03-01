@@ -53,7 +53,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Pre-Owned",
     price: "R4 700",
     ctaLabel: "Add to cart",
-    image: "/iphone11.jpg",
+    image: "/11.jpg",
   },
   {
     id: "iphone-11-pro",
@@ -62,7 +62,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Pre-Owned",
     price: "R5 500",
     ctaLabel: "Add to cart",
-    image: "/iphone11pro.jpg",
+    image: "/iphone 11 pro.jpg",
   },
   {
     id: "iphone-11-pro-max",
@@ -71,7 +71,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Pre-Owned",
     price: "R6 500",
     ctaLabel: "Add to cart",
-    image: "/",
+    image: "/11promax.jpg",
   },
 
   {
@@ -81,7 +81,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Pre-Owned",
     price: "R5 400",
     ctaLabel: "Add to cart",
-    image: "/iphone12.jpg",
+    image: "/12.jpg",
   },
   {
     id: "iphone-12-128",
@@ -136,7 +136,7 @@ export const iphoneModels: IphoneModel[] = [
     condition: "Pre-Owned",
     price: "R10 100",
     ctaLabel: "Add to cart",
-    image: "/",
+    image: "/13promax.jpg",
   },
 
   {
