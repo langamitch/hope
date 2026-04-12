@@ -165,7 +165,7 @@ export default function Home() {
       )}
 
       {/*hero */}
-      <section className="relative h-[80vh] overflow-hidden">
+      <section className="relative h-[90vh] overflow-hidden">
         <div className="absolute inset-0">
           <iframe
             className={`absolute top-1/2 left-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2 ${

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Geist_Mono } from "next/font/google";
-import SmoothScroll from "./components/SmoothScroll";
-import GoogleAnalytics from "./components/GoogleAnalytics";
-import CartProvider from "./components/CartProvider";
 import CartDrawer from "./components/CartDrawer";
+import CartProvider from "./components/CartProvider";
+import GoogleAnalytics from "./components/GoogleAnalytics";
+import SmoothScroll from "./components/SmoothScroll";
 import "./globals.css";
 
 const helveticaNeue = localFont({
